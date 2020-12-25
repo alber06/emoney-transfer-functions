@@ -8,12 +8,12 @@ export default class Utils {
   /**
    * Transfers tokens between accounts
    *
-   * @param  {UserAccount} accountFrom
+   * @param  {UserAccountType} accountFrom
    * @param  {string} addressTo
    * @param  {number} amount
    * @returns Promise<void>
    */
-  static transferFrom = async (accountFrom: UserAccount, addressTo: string, amount: number): Promise<void> => {
+  static transferFrom = async (accountFrom: UserAccountType, addressTo: string, amount: number): Promise<void> => {
     Utils.validateTransferParams(accountFrom, addressTo, amount);
 
     const { ethAccountAddress: addressFrom, ethAccountPrivateKey: privateKey } = accountFrom;
@@ -34,12 +34,12 @@ export default class Utils {
   /**
    * Sends ether between accounts
    *
-   * @param  {UserAccount} accountFrom
+   * @param  {UserAccountType} accountFrom
    * @param  {string} addressTo
    * @param  {number} amount
    * @returns Promise<void>
    */
-  static sendEtherFrom = async (accountFrom: UserAccount, addressTo: string, amount: string): Promise<void> => {
+  static sendEtherFrom = async (accountFrom: UserAccountType, addressTo: string, amount: string): Promise<void> => {
     const { ethAccountAddress: addressFrom, ethAccountPrivateKey: privateKey } = accountFrom;
 
     console.debug(`Sending ${amount} ether from ${addressFrom} to ${addressTo}`);
@@ -57,12 +57,12 @@ export default class Utils {
   /**
    * Validates transfer parameters
    *
-   * @param  {UserAccount} accountFrom
+   * @param  {UserAccountType} accountFrom
    * @param  {string} addressTo
    * @param  {number} amount
    * @returns void
    */
-  private static validateTransferParams(accountFrom: UserAccount, addressTo: string, amount: number): void {
+  private static validateTransferParams(accountFrom: UserAccountType, addressTo: string, amount: number): void {
     if (!addressTo) {
       throw new Error('Address to transfer data must be provided');
     }

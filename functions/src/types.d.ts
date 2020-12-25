@@ -1,4 +1,5 @@
-interface UserAccount {
+interface UserAccountType {
+  uid?: string;
   ethAccountAddress: string;
   ethAccountPrivateKey: string;
   email?: string;
