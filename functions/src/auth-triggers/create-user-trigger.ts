@@ -6,7 +6,7 @@ import { config } from '../config';
 import { UserAccount } from '../models';
 
 const INITIAL_SPH_AMOUNT = 100;
-const INITIAL_ETH_AMOUNT = '0.005';
+const INITIAL_ETH_AMOUNT = '0.01';
 
 // Firestore function
 
