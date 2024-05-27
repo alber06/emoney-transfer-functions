@@ -1,4 +1,6 @@
-import { Transaction as EthereumTx } from 'ethereumjs-tx';
+import { LegacyTransaction as EthereumTx } from '@ethereumjs/tx';
+import { Common } from '@ethereumjs/common';
+import { bytesToHex } from '@ethereumjs/util'
 import CryptoJS from 'crypto-js';
 import web3 from './web3';
 import { sphToken } from '../contracts';
@@ -93,22 +95,22 @@ export default class Utils {
     const rawTransaction = {
       from: addressFrom,
       nonce: web3.utils.toHex(count),
-      gasPrice: '0xEE6B2800',
+      gasPrice: '0x6A8184744',
       gasLimit: '0xDBBA0',
       to: addressTo,
       ...transactionPayload,
     };
+    const common = new Common({ chain: 'sepolia' });
     const tx = new EthereumTx(rawTransaction, {
-      chain: 'rinkeby',
+      common,
     });
     const bufferedPrivateKey = Buffer.from(privateKey, 'hex');
+    const signedTx = tx.sign(bufferedPrivateKey);
 
-    tx.sign(bufferedPrivateKey);
-
-    await web3.eth.sendSignedTransaction(`0x${tx.serialize().toString('hex')}`);
+    await web3.eth.sendSignedTransaction(bytesToHex(signedTx.serialize()));
   };
 
-  static balanceOf = (address: string): number => {
+  static balanceOf = (address: string): Promise<number> => {
     return sphToken.methods.balanceOf(address).call();
   };
 }
